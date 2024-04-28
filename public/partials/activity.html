@@ -1,0 +1,27 @@
+<div flex class="activity-content" layout="column" layout-align="start stretch">
+  <div ng-if="!activeTasks.length" class="no-activity" layout="column" layout-align="center center">
+    <div class="panel-element activity-title"><span id="no-activity-title" class="missing-data">No Activity</span></div>
+  </div>
+  <div ng-if="activeTasks.length" class="activity-list-container" layout="column" layout-align="start stretch">
+    <div class="activity-list">
+           <div class="active-task" ng-repeat="task in activeTasks | orderBy:'-'"" layout="column">
+               <div class="task-info task-data" layout="column">
+                 <div class="task-file" ng-bind="task.data.video"></div>
+                 <div class="task-track" layout="row">
+                   <span class="task-track-info"><span class="task-track-info-title">Title: </span> {{task.data.title}}</span>
+                   <span ng-if="task.data.track" class="task-track-info"><span class="task-track-info-title">Track: </span>{{task.data.track}}</span>
+                  </div>
+                 <div class="task-process" ng-bind="task.data.process"></div>
+               </div>
+               <div class="progress-bar-container">
+                 <div ng-if="task.data.indeterminate !== false" class="progress-indicator indeterminate">
+                   <md-progress-linear md-mode="indeterminate" class="activity-progress-indicator"></md-progress-linear>
+                 </div>
+                 <div ng-if="task.data.indeterminate === false" class="progress-indicator determinate">
+                   <md-progress-linear md-mode="determinate" class="activity-progress-indicator" value="{{task.data.progress}}"></md-progress-linear>
+                 </div>
+               </div>
+           </div>
+    </div>
+  </div>
+</div>

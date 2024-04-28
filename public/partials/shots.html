@@ -1,0 +1,13 @@
+<div class="shots-content-container">
+  <div class="data-missing-container" ng-if="noChartData" layout="column" layout-align="center center">
+    <div flex="100" class="data-missing-container" layout="row" layout-align="center center">
+      <div flex="" class="data-missing-container" layout="column" layout-align="center center">
+        <div class="data-missing-icon"></div>
+        <div class="panel-element"><span id="missing-shotdata-title" class="missing-data">Shot-Length Data Unavailable</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="shots-content" ng-controller="chartController">
+    <ng-echarts class="echarts" ec-config="lineConfig" ec-option="lineOption"></ng-echarts>
+  </div>
+</div>

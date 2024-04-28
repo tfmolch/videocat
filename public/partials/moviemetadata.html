@@ -1,0 +1,135 @@
+<div flex class="moviemetadata-content" layout="column" layout-align="start stretch">
+  <div ng-if="!movie._id" class="no-moviemetadata" layout="column" layout-align="center center">
+    <div class="panel-element moviemetadata-title"><span id="no-moviemetadata-title" class="missing-data">Movie not in Catalogue</span></div>
+  </div>
+  <div ng-if="movie._id" class="metadata-container">
+
+    <div class="panel-element metadata-set-content">
+      <div class="metadata-set-list movie-info-metadata" layout="column" layout-align="start stretch">
+
+        <div flex="100" class="metadata-set-list-row" layout="row" layout-align="start center">
+          <div flex="20" class="metadata-row-element">
+            <span class="row-title video-track">Title:</span>
+          </div>
+          <div flex="" class="metadata-row-element" layout="row" layout-align="start center">
+            <span flex="" class="row-content">{{movie._source.title}}</span>
+          </div>
+        </div>
+
+        <div flex="100" class="metadata-set-list-row" layout="row" layout-align="start center">
+          <div flex="20" class="metadata-row-element">
+            <span class="row-title video-track">Year:</span>
+          </div>
+          <div flex="" class="metadata-row-element" layout="row" layout-align="start center">
+            <span flex="" class="row-content">{{movie._source.year}}</span>
+          </div>
+        </div>
+
+        <div flex="100" class="metadata-set-list-row" layout="row" layout-align="start center">
+          <div flex="20" class="metadata-row-element">
+            <span class="row-title video-track">Medium:</span>
+          </div>
+          <div flex="" class="metadata-row-element" layout="row" layout-align="start center">
+            <span flex="" class="row-content">{{movie._source.mediatype}}</span>
+          </div>
+        </div>
+
+        <div flex="100" class="metadata-set-list-row" layout="row" layout-align="start center">
+          <div flex="20" class="metadata-row-element">
+            <span class="row-title video-track">Director:</span>
+          </div>
+          <div flex="" class="metadata-row-element" layout="row" layout-align="start center">
+            <span flex="" class="row-content">{{movie._source.director}}</span>
+          </div>
+        </div>
+
+        <div flex="100" class="metadata-set-list-row" layout="row" layout-align="start center" ng-if="!movie._source.production.production_companies">
+          <div flex="20" class="metadata-row-element">
+            <span class="row-title video-track">Production Company:</span>
+          </div>
+          <div flex="" class="metadata-row-element" layout="row" layout-align="start center">
+            <span flex="" class="row-content">{{movie._source.productioncompany}}</span>
+          </div>
+        </div>
+
+        <div flex="100" class="metadata-set-list-row" layout="row" layout-align="start center" ng-if="movie._source.production.production_companies">
+          <div flex="20" class="metadata-row-element">
+            <span class="row-title video-track">Production Companies:</span>
+          </div>
+          <div class="metadata-column-set" id="production-companies" layout="column" layout-align="start start">
+            <div flex="" class="metadata-row-element" ng-repeat="productioncompany in movie._source.production.production_companies">
+              <span flex="" class="row-content">{{productioncompany.name}}<span ng-if="productioncompany.origin_country"> ({{productioncompany.origin_country}})</span></span>
+            </div>
+          </div>
+        </div>
+
+        <div flex="100" class="metadata-set-list-row" layout="row" layout-align="start center" ng-if="movie._source.production.spoken_languages">
+          <div flex="20" class="metadata-row-element">
+            <span class="row-title video-track">Spoken Languages:</span>
+          </div>
+          <div class="metadata-column-set" id="spoken-languages" layout="column" layout-align="start start">
+            <div flex="" class="metadata-row-element" ng-repeat="language in movie._source.production.spoken_languages">
+              <span flex="" class="row-content">{{language.name}}<span ng-if="language.english_name !== 'English'"> ({{language.english_name}})</span></span>
+            </div>
+          </div>
+        </div>
+
+        <div flex="100" class="metadata-set-list-row" layout="row" layout-align="start center" ng-if="movie._source.asl_seconds">
+          <div flex="20" class="metadata-row-element">
+            <span class="row-title video-track">ASL:</span>
+          </div>
+          <div flex="" class="metadata-row-element" layout="row" layout-align="start center">
+            <span flex="" class="row-content">{{movie._source.asl_seconds | roundTo: 2}}s</span>
+          </div>
+        </div>
+
+        <div flex="100" class="metadata-set-list-row" layout="row" layout-align="start center" ng-if="movie._source.number_of_shots">
+          <div flex="20" class="metadata-row-element">
+            <span class="row-title video-track">Shots:</span>
+          </div>
+          <div flex="" class="metadata-row-element" layout="row" layout-align="start center">
+            <span flex="" class="row-content">{{movie._source.number_of_shots}}</span>
+          </div>
+        </div>
+
+        <div flex="100" class="metadata-set-list-row tagline" layout="row" layout-align="start center" ng-if="movie._source.production.tagline">
+          <div flex="20" class="metadata-row-element">
+            <span class="row-title video-track">Tagline:</span>
+          </div>
+          <div flex="" class="metadata-row-element tagline-text" layout="row" layout-align="start center">
+            <span flex="" class="row-content">{{movie._source.production.tagline}}</span>
+          </div>
+        </div>
+
+        <div flex="100" class="metadata-set-list-row summary" layout="row" layout-align="start center" ng-if="movie._source.production.overview">
+          <div flex="20" class="metadata-row-element">
+            <span class="row-title video-track">Summary:</span>
+          </div>
+          <div flex="" class="metadata-row-element summary-text" layout="row" layout-align="start center">
+            <span flex="" class="row-content">{{movie._source.production.overview}}</span>
+          </div>
+        </div>
+
+        <div flex="100" class="metadata-set-list-row loan" layout="row" layout-align="start center" ng-if="movie._source.loan.comment">
+          <div flex="20" class="metadata-row-element">
+            <span class="row-title video-track">On loan to:</span>
+          </div>
+          <div flex="" class="metadata-row-element loan-text" layout="row" layout-align="start center">
+            <span flex="" class="row-content">{{movie._source.loan.comment}}</span>
+          </div>
+        </div>
+
+        <div flex="100" class="metadata-set-list-row tagline" layout="row" layout-align="start center" ng-if="movie._source.comment">
+          <div flex="20" class="metadata-row-element">
+            <span class="row-title video-track">Comment:</span>
+          </div>
+          <div flex="" class="metadata-row-element comment-text" layout="row" layout-align="start center">
+            <span flex="" class="row-content">{{movie._source.comment}}</span>
+          </div>
+        </div>
+
+
+      </div>
+    </div>
+  </div>
+</div>

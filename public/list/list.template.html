@@ -1,0 +1,387 @@
+<div ng-cloak class="view">
+  <md-content id="catalogue-view-container" class="catalogue-view" layout="column" layout-align="start stretch"
+    ng-class="{'dark-mode':darkMode}">
+    <div class="list-header-container">
+      <div class="list-header noselect" resizable-header>
+        <div class="list-column title-column" ng-class="{'active-column':($storage.sortColumn === 'title')}">
+          <span class="column-title" md-truncate ng-click="sortBy('title')">Title</span>
+          <md-icon ng-if="$storage.sortOrder === 'desc'" class="sort-order-arrow">arrow_drop_down</md-icon>
+          <md-icon ng-if="$storage.sortOrder === 'asc'" class="sort-order-arrow">arrow_drop_up</md-icon>
+        </div>
+        <div class="list-column year-column" ng-class="{'active-column':($storage.sortColumn === 'year')}">
+          <span class="column-title" md-truncate ng-click="sortBy('year')">Year</span>
+          <md-icon ng-if="$storage.sortOrder === 'desc'" class="sort-order-arrow">arrow_drop_down</md-icon>
+          <md-icon ng-if="$storage.sortOrder === 'asc'" class="sort-order-arrow">arrow_drop_up</md-icon>
+        </div>
+        <div class="list-column mediatype-column" ng-class="{'active-column':($storage.sortColumn === 'mediatype')}">
+          <span class="column-title" md-truncate ng-click="sortBy('mediatype')">Media</span>
+          <md-icon ng-if="$storage.sortOrder === 'desc'" class="sort-order-arrow">arrow_drop_down</md-icon>
+          <md-icon ng-if="$storage.sortOrder === 'asc'" class="sort-order-arrow">arrow_drop_up</md-icon>
+        </div>
+        <div class="list-column director-column" ng-class="{'active-column':($storage.sortColumn === 'director')}">
+          <span class="column-title" md-truncate ng-click="sortBy('director')">Director</span>
+          <md-icon ng-if="$storage.sortOrder === 'desc'" class="sort-order-arrow">arrow_drop_down</md-icon>
+          <md-icon ng-if="$storage.sortOrder === 'asc'" class="sort-order-arrow">arrow_drop_up</md-icon>
+        </div>
+        <div class="list-column writer-column" ng-class="{'active-column':($storage.sortColumn === 'writer')}">
+          <span class="column-title" md-truncate ng-click="sortBy('writer')">Writers</span>
+          <md-icon ng-if="$storage.sortOrder === 'desc'" class="sort-order-arrow">arrow_drop_down</md-icon>
+          <md-icon ng-if="$storage.sortOrder === 'asc'" class="sort-order-arrow">arrow_drop_up</md-icon>
+        </div>
+
+        <div class="list-column editor-column" ng-class="{'active-column':($storage.sortColumn === 'editor')}">
+          <span class="column-title" md-truncate ng-click="sortBy('editor')">Editors</span>
+          <md-icon ng-if="$storage.sortOrder === 'desc'" class="sort-order-arrow">arrow_drop_down</md-icon>
+          <md-icon ng-if="$storage.sortOrder === 'asc'" class="sort-order-arrow">arrow_drop_up</md-icon>
+        </div>
+
+        <div class="list-column productioncompany-column"
+          ng-class="{'active-column':($storage.sortColumn === 'productioncompany')}">
+          <span class="column-title" md-truncate ng-click="sortBy('productioncompany')">Production Company</span>
+          <md-icon ng-if="$storage.sortOrder === 'desc'" class="sort-order-arrow">arrow_drop_down</md-icon>
+          <md-icon ng-if="$storage.sortOrder === 'asc'" class="sort-order-arrow">arrow_drop_up</md-icon>
+        </div>
+
+        <div class="list-column asl-column" ng-class="{'active-column':($storage.sortColumn === 'asl_seconds')}">
+          <span class="column-title" md-truncate ng-click="sortBy('asl_seconds')">ASL</span>
+          <md-icon ng-if="$storage.sortOrder === 'desc'" class="sort-order-arrow">arrow_drop_down</md-icon>
+          <md-icon ng-if="$storage.sortOrder === 'asc'" class="sort-order-arrow">arrow_drop_up</md-icon>
+        </div>
+
+        <div class="list-column shot-count-column"
+          ng-class="{'active-column':($storage.sortColumn === 'number_of_shots')}">
+          <span class="column-title" md-truncate ng-click="sortBy('number_of_shots')">Shots</span>
+          <md-icon ng-if="$storage.sortOrder === 'desc'" class="sort-order-arrow">arrow_drop_down</md-icon>
+          <md-icon ng-if="$storage.sortOrder === 'asc'" class="sort-order-arrow">arrow_drop_up</md-icon>
+        </div>
+
+        <div class="list-column date-added-column" ng-class="{'active-column':($storage.sortColumn === 'added')}">
+          <span class="column-title" md-truncate ng-click="sortBy('added')">Date Added</span>
+          <md-icon ng-if="$storage.sortOrder === 'desc'" class="sort-order-arrow">arrow_drop_down</md-icon>
+          <md-icon ng-if="$storage.sortOrder === 'asc'" class="sort-order-arrow">arrow_drop_up</md-icon>
+        </div>
+
+        <div class="list-column last-played-column" ng-class="{'active-column':($storage.sortColumn === 'lastplayed')}">
+          <span class="column-title" md-truncate ng-click="sortBy('lastplayed')">Last Played</span>
+          <md-icon ng-if="$storage.sortOrder === 'desc'" class="sort-order-arrow">arrow_drop_down</md-icon>
+          <md-icon ng-if="$storage.sortOrder === 'asc'" class="sort-order-arrow">arrow_drop_up</md-icon>
+        </div>
+
+        <div class="list-column rating-column" ng-class="{'active-column':($storage.sortColumn === 'rating')}">
+          <span class="column-title" md-truncate ng-click="sortBy('rating')">Rating</span>
+          <md-icon ng-if="$storage.sortOrder === 'desc'" class="sort-order-arrow">arrow_drop_down</md-icon>
+          <md-icon ng-if="$storage.sortOrder === 'asc'" class="sort-order-arrow">arrow_drop_up</md-icon>
+        </div>
+      </div>
+      <div class="menu-functions">
+        <div class="dedupe-mode">
+          <md-button class="dedupe-mode-toggle" ng-click="toggleDupes()"
+            ng-class="{'dedupe-mode-on':(dedupeMode === true)}">
+            <md-icon>content_copy</md-icon>
+          </md-button>
+        </div>
+        <div class="theme-switcher">
+          <md-button class="dark-mode-toggle" ng-click="toggleTheme()">
+            <md-icon>dark_mode</md-icon>
+          </md-button>
+        </div>
+        <div class="view-switcher" ng-controller="viewController as ctrl">
+          <md-button class="view-toggle" ng-click="toggleView()">
+            <md-icon>bubble_chart</md-icon>
+          </md-button>
+        </div>
+      </div>
+    </div>
+    <div class="list-container noselect" flex disable-right-click md-swipe-right="resetFilter(true)">
+      <md-virtual-repeat-container md-auto-shrink="true" md-offset-size="50" md-auto-shrink-min="150"
+        id="catalogue-list" layout="column" layout-align="center stretch" md-top-index="$storage.selection.topItem"
+        resizable-columns>
+        <div md-virtual-repeat="item in videocat.hits.hits" md-item-size="30" class="catalogue-item noselect"
+          id="catalogue-item-{{$index}}"
+          ng-class="{'even-row':(($index % 2)>0),'selected-row':($index === $storage.selection.selectedItem),'selected-row':($storage.selection.multiselect.indexOf(item._id) > -1),'new-item':(item._source.playcount===0),'on-loan':item._source.loan,'damaged':(item._source.damaged === true),'multi-selected-row':isInSelectionRange($index)}"
+          layout="column" layout-align="start stretch" ng-mousedown="handleClick($index, $event)">
+
+          <div
+            ng-if="($index === $storage.selection.selectedItem)||($storage.selection.multiselect.indexOf(item._id) > -1)"
+            class="selected-row-border"></div>
+          <div ng-if="(item._source.damaged === true)" class="damaged-media"></div>
+          <div class="list-item" resizable-row>
+
+            <div class="list-content title-column line-item-left" layout="row" layout-align="start stretch">
+
+              <div class="playcount-play-container" layout="row" layout-align="start stretch">
+                <div class="unplayed-indicator-container" layout="column" layout-align="center center">
+                  <div class="unplayed-indicator" ng-if="item._source.playcount===0"></div>
+                </div>
+                <div class="play-menu-container" layout="column" layout-align="center center">
+                  <md-menu class="play-menu" md-theme="{{getTheme()}}">
+                    <md-button md-ink-ripple="false" class="md-icon-button" aria-label="play title"
+                      ng-disabled="item._source.loan===true" ng-click="openMenu($mdMenu, $event)">
+                      <md-icon md-menu-origin">play_circle_outline</md-icon>
+                    </md-button>
+                    <md-menu-content width="2">
+                      <md-menu-item class="playback-machine" ng-repeat="machine in machines"
+                        ng-class="{'this-machine':(machine.isyou === true)}">
+                        <md-button ng-disabled="machine.capabilities.indexOf(item._source.mediatype) === -1"
+                          aria-label="play title" ng-click="playTitle(machine)">
+                          <md-icon>airplay</md-icon>
+                          {{machine.name}}
+                        </md-button>
+                      </md-menu-item>
+                    </md-menu-content>
+                  </md-menu>
+                </div>
+              </div>
+
+              <div class="entry-title row-text"
+                ng-class="{'unplayed':(item._source.playcount===0),'has-comment':item._source.comment.length}"
+                md-truncate ng-bind-html="item._source.title | theFilter"></div>
+
+              <div class="comment-container" ng-if="item._source.comment.length"
+                ng-mouseover="showComment(item._source.comment,$index,$event)" ng-mouseleave="hideComment($index)">
+                <md-icon class="inline-comment-icon">notes</md-icon>
+              </div>
+
+            </div>
+
+            <div class="list-content year-column">{{item._source.year}}</div>
+
+            <div class="list-content mediatype-column">
+              <div class="proxy-icon-container media-column-iconset">
+                <span class="material-icons-outlined proxy-icon" ng-if="item._source.proxy">movie</span>
+              </div>
+              <div class="media-icon-container media-column-iconset">
+                <md-tooltip>{{item._source.path.split('/')[2]}}</md-tooltip>
+                <div class="disc-icon-container">
+                  <div class="bd-icon" ng-if="item._source.mediatype === 'BD'"></div>
+                  <div class="dvd-icon" ng-if="item._source.mediatype === 'DVD'"></div>
+                </div>
+              </div>
+              <div class="bonus-disc-container" layout="row" layout-align="start center"
+                ng-if="item._source.bonus_discs">
+                <md-menu flex="" class="bonus-menu" md-theme="{{getTheme()}}" ng-repeat="bonusdisc in item._source.bonus_discs">
+                  <md-button md-ink-ripple="false" class="md-icon-button bonus-menu-button" aria-label="play bonus"
+                    ng-click="openMenu($mdMenu, $event)">
+                    <md-icon md-menu-origin>control_point_duplicate</md-icon>
+                  </md-button>
+                  <md-menu-content width="2">
+                    <md-menu-item class="playback-machine" ng-repeat="machine in machines">
+                      <md-button ng-disabled="machine.capabilities.indexOf(item._source.mediatype) === -1"
+                        aria-label="play title" ng-click="playTitle(machine,bonusdisc)">
+                        <md-icon>airplay</md-icon>
+                        {{machine.name}}
+                      </md-button>
+                    </md-menu-item>
+                  </md-menu-content>
+                </md-menu>
+              </div>
+            </div>
+            <div class="list-content director-column row-text">
+              <div class="director-name" md-truncate ng-class="{'has-commentary':item._source.commentary}">
+                {{item._source.director}}</div>
+              <div ng-if="item._source.commentary" class="commentary-icon-container">
+                <md-icon class="commentary-icon">volume_up</md-icon>
+              </div>
+            </div>
+            <div class="list-content writer-column row-text">
+              <div class="cell-padding">
+                <span class="writer-name" ng-repeat="person in item._source.crew | filter:{roles:'Writing'}"
+                  ng-class="{'person-clicked':(previousClick === person.name)}" ng-click="filterClick(person.name)">
+                  {{person.name}}<span class="comma" ng-if="!$last">,&nbsp;</span>
+                </span>
+              </div>
+            </div>
+            <div class="list-content editor-column row-text">
+              <div class="cell-padding">
+                <span class="editor-name" ng-repeat="person in item._source.crew | filter:{roles:'Editing'}"
+                  ng-class="{'person-clicked':(previousClick === person.name)}" ng-click="filterClick(person.name)">
+                  {{person.name}}<span class="comma" ng-if="!$last">,&nbsp;</span>
+                </span>
+              </div>
+            </div>
+            <div class="list-content productioncompany-column row-text">{{item._source.productioncompany}}</div>
+            <div class="list-content asl-column row-text">{{item._source.asl_seconds | roundTo: 2}}</div>
+            <div class="list-content shot-count-column row-text">{{item._source.number_of_shots}}</div>
+            <div class="list-content date-added-column row-text">{{item._source.added | date:'dd/MM/yyyy'}}</div>
+            <div class="list-content last-played-column row-text">{{(item._source.lastplayed | date:'dd/MM/yyyy')||'-'}}
+            </div>
+
+            <div class="list-content rating-column">
+              <rating class="star-rating-component" rating="item._source.rating" id="item._id"></rating>
+            </div>
+
+          </div>
+
+        </div>
+      </md-virtual-repeat-container>
+    </div>
+
+  </md-content>
+</div>
+
+<div class="context-menu-container" ng-if="contextMenu.visible === true">
+  <div class="mousetrap" ng-mousemove="setContextMenuPosition($event)" ng-mousedown="goAwayContextMenu()"></div>
+  <div class="context-menu" md-theme="{{getTheme()}}" style="left:{{contextMenu.posX}}px;top:{{contextMenu.posY}}px;"
+    layout="column" layout-align="start stretch">
+    <div class="context-menu-item">
+      <md-button aria-label="edit title" ng-click="editTitle();goAwayContextMenu(false)"
+        ng-disabled="$storage.selection.selectedRangeEnd">
+        <md-icon>mode</md-icon>
+        Edit
+      </md-button>
+    </div>
+    <div class="context-menu-item">
+      <div class="submenu-item" aria-label="autofill metadata" ng-disabled="$storage.selection.selectedRangeEnd"
+        ng-mouseenter="showAutofill()" ng-mouseleave="hideAutofill()" layout="row" layout-align="start stretch">
+        <md-icon>auto_fix_high</md-icon>
+        <span flex="" class="submenu-title">Autofill Metadata</span>
+        <md-icon ng-if="(autofill.loading !== true)">arrow_right</md-icon>
+        <div class="small-loading-indicator" ng-if="(autofill.loading === true)"></div>
+        <div class="submenu" ng-if="autofill.visible === true">
+          <div class="context-menu-item" ng-if="autofill.results" ng-repeat="result in autofill.results"
+            ng-click="autofillItemMetadata(result);goAwayContextMenu()" md-ink-ripple>
+            <span class="autofill-title" md-truncate>{{result.title}} ({{result.details.director.original_name}},
+              {{result.release_date | formatReleaseDate}})</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="context-menu-item">
+      <div class="submenu-item" aria-label="process" ng-disabled="$storage.selection.selectedRangeEnd"
+        ng-class="{'active-submenu':(showProcessingSubmenu === true)}" ng-mouseleave="showProcessingSubmenu = false"
+        ng-mouseenter="showProcessingSubmenu = true" layout="row" layout-align="start stretch">
+        <md-icon>account_tree</md-icon>
+        <span flex="" class="submenu-title">Process</span>
+        <md-icon>arrow_right</md-icon>
+        <div class="submenu-fullheight submenu-even-level" md-theme="{{getTheme()}}"
+          ng-if="showProcessingSubmenu === true">
+
+          <div class="context-menu-item">
+            <div class="submenu-item"
+              ng-if="videocat.hits.hits[$storage.selection.selectedItem]._source.mediatype === 'DVD'"
+              aria-label="process" ng-mouseleave="subtitleTracks.visible = false"
+              ng-class="{'active-submenu':(subtitleTracks.visible === true),'disabled-context-menu-item':((!details.discmetadata.main_title_track.subp.length)&&(subtitleTracks.loading !== true))}"
+              ng-mouseenter="showSubtitleTrackList()" layout="row" layout-align="start stretch">
+              <md-icon>subtitles</md-icon>
+              <span flex="" class="submenu-title">Extract Subtitles</span>
+              <md-icon ng-if="(subtitleTracks.loading !== true)">arrow_right</md-icon>
+              <div class="small-loading-indicator" ng-if="(subtitleTracks.loading === true)"></div>
+              <div class="submenu-fullheight submenu-odd-level" md-theme="{{getTheme()}}"
+                ng-if="(details.discmetadata) && (subtitleTracks.visible === true) && (details.discmetadata.main_title_track.subp.length)">
+                <div class="context-menu-item subtitle-track"
+                  ng-repeat="track in details.discmetadata.main_title_track.subp">
+                  <md-button aria-label="extract subtitles"
+                    ng-click="extractSubtitles(track.ix[0]);goAwayContextMenu()">
+                    <span flex="10" class="row-title subtitle-track">{{track.ix[0]}}:</span>
+                    <span flex=""
+                      class="row-content track-language subtitle-track-language">{{track.language[0]}}</span>
+                  </md-button>
+                </div>
+              </div>
+            </div>
+            <div class="submenu-item"
+              ng-if="videocat.hits.hits[$storage.selection.selectedItem]._source.mediatype === 'BD'"
+              aria-label="process" ng-mouseleave="subtitleTracks.visible = false"
+              ng-class="{'active-submenu':(subtitleTracks.visible === true),'disabled-context-menu-item':((!details.discmetadata.titles[0].subtitles.length)&&(subtitleTracks.loading !== true))}"
+              ng-mouseenter="showSubtitleTrackList()" layout="row" layout-align="start stretch">
+              <md-icon>subtitles</md-icon>
+              <span flex="" class="submenu-title">Extract Subtitles</span>
+              <md-icon ng-if="(subtitleTracks.loading !== true)">arrow_right</md-icon>
+              <div class="small-loading-indicator" ng-if="(subtitleTracks.loading === true)"></div>
+              <div class="submenu-fullheight submenu-odd-level" md-theme="{{getTheme()}}"
+                ng-if="(details.discmetadata) && (subtitleTracks.visible === true) && (details.discmetadata.titles[0].subtitles.length)">
+                <div class="context-menu-item subtitle-track"
+                  ng-repeat="track in details.discmetadata.titles[0].subtitles">
+                  <md-button aria-label="extract subtitles"
+                    ng-click="extractSubtitles(track.track);goAwayContextMenu()">
+                    <span flex="10" class="row-title subtitle-track">{{track.track}}:</span>
+                    <span flex=""
+                      class="row-content track-language subtitle-track-language">{{track.language_en}}</span>
+                  </md-button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="context-menu-item">
+            <md-button aria-label="send to handbrake" ng-click="sendToHandbrake();goAwayContextMenu()"
+              ng-disabled="$storage.selection.selectedRangeEnd">
+              <md-icon>screen_share</md-icon>
+              Rip
+            </md-button>
+          </div>
+
+          <div class="context-menu-item">
+            <md-button aria-label="detect cuts" ng-click="detectCuts()"
+              ng-disabled="$storage.selection.selectedRangeEnd">
+              <md-icon>analytics</md-icon>
+              Detect Cuts
+            </md-button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="context-menu-item">
+      <md-button aria-label="reveal in Finder" ng-click="revealInFinder();goAwayContextMenu()">
+        <md-icon>drive_file_move</md-icon>
+        Reveal Folder
+      </md-button>
+    </div>
+    <div class="context-menu-item">
+      <md-button aria-label="delete title" ng-click="deleteTitles();goAwayContextMenu()">
+        <md-icon>delete</md-icon>
+        Remove
+      </md-button>
+    </div>
+    <div id="played-unplayed" class="context-menu-item toggle-menu-item" layout="column" layout-align="start center">
+      <h5 class="menu-subtitle">Mark...</h5>
+      <div class="menu-item-actions" layout="row" layout-align="space-around stretch">
+        <div aria-label="mark unplayed" class="toggle-menu-item-button" ng-click="markUnplayed();goAwayContextMenu()"
+          layout="row" layout-align="start center">
+          <md-icon class="menu-toggle-icon">new_releases</md-icon>
+          <span flex="" class="menu-button-text">New</span>
+        </div>
+        <md-divider></md-divider>
+        <div aria-label="mark played" class="toggle-menu-item-button" ng-click="markPlayed();goAwayContextMenu()"
+          layout="row" layout-align="start center">
+          <md-icon class="menu-toggle-icon">done_outline</md-icon>
+          <span flex="" class="menu-button-text">Played</span>
+        </div>
+      </div>
+    </div>
+    <div id="loan" class="context-menu-item toggle-menu-item" layout="column" layout-align="start center">
+      <h5 class="menu-subtitle">Loan...</h5>
+      <div class="menu-item-actions" layout="row" layout-align="space-around stretch">
+        <div aria-label="mark loan out" class="toggle-menu-item-button" ng-click="markLoanOut();goAwayContextMenu()"
+          layout="row" layout-align="start center">
+          <md-icon class="menu-toggle-icon">event</md-icon>
+          <span flex="" class="menu-button-text">Out</span>
+        </div>
+        <md-divider></md-divider>
+        <div aria-label="mark loan in" class="toggle-menu-item-button" ng-click="markLoanIn();goAwayContextMenu()"
+          layout="row" layout-align="start center">
+          <md-icon class="menu-toggle-icon">done_outline</md-icon>
+          <span flex="" class="menu-button-text">Return</span>
+        </div>
+      </div>
+    </div>
+    <div id="damage" class="context-menu-item toggle-menu-item" layout="column" layout-align="start center">
+      <h5 class="menu-subtitle">Damage...</h5>
+      <div class="menu-item-actions" layout="row" layout-align="space-around stretch">
+        <div aria-label="mark damaged" class="toggle-menu-item-button"
+          ng-click="markDamaged(item, $index);goAwayContextMenu()" layout="row" layout-align="start center">
+          <md-icon class="menu-toggle-icon">hide_source</md-icon>
+          <span flex="" class="menu-button-text">Damaged</span>
+        </div>
+        <md-divider></md-divider>
+        <div aria-label="mark fixed" class="toggle-menu-item-button"
+          ng-click="markFixed(item, $index);goAwayContextMenu()" layout="row" layout-align="start center">
+          <md-icon class="menu-toggle-icon">done_outline</md-icon>
+          <span flex="" class="menu-button-text">OK</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

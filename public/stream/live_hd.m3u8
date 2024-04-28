@@ -1,0 +1,16 @@
+#EXTM3U
+#EXT-X-TARGETDURATION:10
+#EXT-X-VERSION:3
+#EXT-X-ALLOW-CACHE:NO
+#EXT-X-MEDIA-SEQUENCE:219
+#EXTINF:9.54,
+/stream/live_hd_00000219.ts
+#EXTINF:8.84,
+/stream/live_hd_00000220.ts
+#EXTINF:9.69,
+/stream/live_hd_00000221.ts
+#EXTINF:5.98,
+/stream/live_hd_00000222.ts
+#EXTINF:19.53,
+/stream/live_hd_00000223.ts
+#EXT-X-ENDLIST

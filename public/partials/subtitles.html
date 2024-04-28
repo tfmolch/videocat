@@ -1,0 +1,133 @@
+<div flex class="subtitles-content" layout="column" layout-align="start stretch">
+
+  <div flex="100" class="subtitles-missing-container" layout="column" ng-if="((!subtitles.localsubtitles)&&(!subtitles.opensubtitles))" layout-align="center center">
+    <div flex="100" class="subtitles-missing" layout="column" layout-align="center center">
+      <div class="spinner-container">
+        <div class="loading-spinner"></div>
+      </div>
+    </div>
+  </div>
+
+  <div flex="100" class="subtitles-missing-container" layout="column" ng-if="((subtitles.localsubtitles&&subtitles.opensubtitles)&&((!subtitles.localsubtitles.length)&&(!subtitles.opensubtitles.length)))" layout-align="center center">
+    <div flex="100" class="subtitles-missing-container" layout="column" layout-align="center center">
+      <div class="subtitles-missing-container">
+        <span class="material-icons data-missing-icon">subtitles_off</span>
+      </div>
+      <div class="panel-element subtitles-title"><span id="missing-subtitles-title" class="missing-data">Subtitles Unavailable</span></div>
+    </div>
+  </div>
+
+  <div ng-if="((subtitles.localsubtitles.length)||(subtitles.opensubtitles.length))" class="subtitles-container" layout="column" layout-align="start stretch">
+
+    <md-tabs id="subtitle-tabs" class="panel-tabs" md-center-tabs md-align-tabs="bottom" md-no-ink	md-no-ink-bar md-selected="tabIndex">
+
+      <md-tab label="SRT" class="subtitles-tab" id="fetch-subs">
+        <md-content class="subtitles-tab-content">
+          <div class="available-subtitles" flex>
+
+                <md-subheader ng-if="subtitles.localsubtitles.length" class="md-no-sticky panel-subheader">Local</md-subheader>
+                <div class="subtitle-list-item" ng-repeat="sub in subtitles.localsubtitles" ng-class="{'selected-subtitles':((selected.id === $index)&&(selected.type === 'local'))}">
+                  <div class="subtitle-file-container" layout="row" layout-align="start stretch">
+                    <div class="subtitle-file-text" ng-click="processSubs(sub.file,$index)" layout="column" layout-align="center stretch">
+                      <h3 class="subtitle-file-name">{{ sub.file }}</h3>
+                      <div class="attributes" ng-if="sub.attributes.length">
+                        <div ng-repeat="attribute in sub.attributes" class="attribute">
+                          <span class="attribute-name">{{attribute.name}}: </span>
+                          <span class="attribute-content" ng-bind="attribute.content"></span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="delete-button-container" layout="column" layout-align="center center">
+                      <md-button class="md-icon-button delete-button" aria-label="delete-button" ng-click="deleteLocalSub(sub.file,$index)">
+                        <md-icon class="delete-button-icon">close</md-icon>
+                      </md-button>
+                    </div>
+                  </div>
+                </div>
+
+                 <md-subheader ng-if="subtitles.opensubtitles.length" class="md-no-sticky panel-subheader">OpenSubtitles</md-subheader>
+                 <div class="subtitle-list-item" ng-repeat="sub in subtitles.opensubtitles" ng-click="processSubs(sub,$index)" ng-class="{'selected-subtitles':((selected.id === $index)&&(selected.type === 'external'))}">
+                   <div class="subtitle-file-container" layout="row" layout-align="start stretch">
+                     <div class="subtitle-file-text" layout="column" layout-align="center stretch">
+                       <h3 class="subtitle-file-name">{{ sub.filename }}</h3>
+                       <div class="attributes">
+                         <div class="attribute">
+                           <span class="attribute-name">Downloads: </span>
+                           <span class="attribute-content" ng-bind="sub.downloads"></span>
+                         </div>
+                         <div class="attribute">
+                           <span class="attribute-name">Language: </span>
+                           <span class="attribute-content" ng-bind="sub.lang"></span>
+                         </div>
+                       </div>
+                     </div>
+                   </div>
+                 </div>
+          </div>
+        </md-content>
+      </md-tab>
+
+      <md-tab label="view" class="subtitles-tab" id="parse-subs" ng-disabled="!parsedSubs">
+        <md-content class="subtitles-tab-content">
+          <div class="subtitle-timeshift-container" layout="column" layout-align="center stretch">
+            <md-slider-container id="subtitle-timeshift-slider-container">
+              <md-slider min="-75000" max="75000" ng-model="timeshift.delay" aria-label="timeshift slider" id="subtitle-timeshift-slider" class="subtitle-slider"></md-slider>
+              <md-button class="timeshift-delay-value" ng-click="timeshift.delay = 0">{{timeshift.delay/1000}}s</md-button>
+            </md-slider-container>
+            <md-slider-container id="subtitle-runtime-slider-container">
+              <md-slider min="95" max="105" ng-model="timeshift.runtime" aria-label="timeshift slider" id="subtitle-runtime-slider" class="subtitle-slider"></md-slider>
+              <md-button class="timeshift-runtime-value" ng-click="timeshift.runtime = 100">{{timeshift.runtime}}%</md-button>
+            </md-slider-container>
+          </div>
+          <md-virtual-repeat-container id="subtitle-viewer" md-top-index="parsedSubs.top">
+            <div md-item-size="75"	md-virtual-repeat="subtitle in parsedSubs" ng-class="{'active-subtitle':(isActive(subtitle.startTimeMs,subtitle.endTimeMs) === true),'next-subtitle':(($index===parsedSubs.next)&&((gangTimecode+5000)>=subtitle.startTimeMs))}" class="subtitle" flex>
+              <md-button md-ink-ripple ng-click="jumpToTime(subtitle.startTimeMs)" class="subtitle-button-wrapper"layout="row" layout-align="start stretch">
+                <div flex="" class="subtitle-index-container" layout="column" layout-align="center center">
+                  <div class="subtitle-index" ng-bind="$index"></div>
+                </div>
+                <div flex="90" class="subtitle-content" scale-text>
+                  <div class="subtitle-timecodes" layout="row" layout-align="space-between center">
+                    <div flex="" class="subtitle-timecode subtitle-start">{{subtitle.startTime}}</div>
+                    <div flex="" class="subtitle-timecode subtitle-end">{{subtitle.endTime}}</div>
+                    <div flex="" class="subtitle-timecode subtitle-duration">{{subtitle.duration | msTimecode}}</div>
+                  </div>
+                  <div class="subtitle-text-lines" layou="column" layout-align="center stretch">
+                    <div class="subtitle-text" ng-repeat="line in subtitle.text track by $index" ng-bind-html="line"></div>
+                  </div>
+                </div>
+              </md-button>
+            </div>
+          </md-virtual-repeat-container>
+        </md-content>
+      </md-tab>
+
+      <md-tab label="words" class="subtitles-tab" id="parse-subs" md-on-select="analyzeSubtitltes()" ng-disabled="!parsedSubs">
+        <md-content class="subtitles-tab-content">
+          <div flex class="discmetadata-content" layout="column" layout-align="start stretch" ng-if="!analyzedSubtitltes">
+            <div flex="100" class="discmetadata-missing-container" layout="column" layout-align="center center">
+              <div class="discmetadata-missing-container">
+                <div class="loading-spinner"></div>
+              </div>
+            </div>
+          </div>
+          <div class="word-data" ng-if="analyzedSubtitltes">
+
+            <div class="word-counts">
+
+              <div ng-repeat="occurence in analyzedSubtitltes" class="subtitle-word-occurence {{occurence.pos_tag}}" layout="column" layout-align="center stretch">
+                <div class="subtitle-word-occurence-background {{occurence.pos_tag}}" style="opacity:{{occurence.count/analyzedSubtitltes[0].count*2}};"></div>
+                <div class="word" ng-bind="occurence.word"></div>
+                <div flex="" class="pos-name" ng-bind="occurence.pos_name"></div>
+                <div class="word-count" ng-bind="occurence.count"></div>
+              </div>
+
+            </div>
+          </div>
+        </md-content>
+      </md-tab>
+
+    </md-tabs>
+
+
+  </div>
+</div>

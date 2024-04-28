@@ -1,0 +1,62 @@
+<div ng-cloak class="view">
+  <md-content id="nodegraph-view-container" class="nodegraph-view" layout="column" layout-align="start stretch" ng-class="{'dark-mode':darkMode}">
+    <div class="list-header-container" layout="row" layout-align="end stretch">
+      <div class="theme-switcher">
+        <md-button class="dark-mode-toggle" ng-click="darkMode = !darkMode">
+          <md-icon>dark_mode</md-icon>
+        </md-button>
+      </div>
+      <div class="view-switcher" ng-controller="viewController as ctrl">
+        <md-button class="view-toggle" ng-click="toggleView()">
+          <md-icon>bubble_chart</md-icon>
+        </md-button>
+      </div>
+    </div>
+
+    <div class="nodegraph-nav" ng-if="movieNodeList.length">
+      <div class="metadata-set-header">Movies</div>
+        <div class="movie-node-list-container skinny-scrollbar">
+          <div class="movie-node-scroll-container">
+              <div class="movie-node" id="{{movie.id}}" scrollif="(movie.id === activenode)" ng-class="{'active-movie-node':(movie.id === activenode),'movie-not-in-catalogue':((movie.group !== 'DVD')&&(movie.group !== 'BD'))}" ng-repeat="movie in movieNodeList">
+                <md-button class="movie-node-text" ng-click="flyToNode(movie.id)" md-truncate>{{movie.id}} ({{movie.year}})</md-button>
+              </div>
+          </div>
+        </div>
+    </div>
+
+    <div class="nodegraph-types" ng-if="nodeTypes.length">
+      <div class="metadata-set-header">Node Types</div>
+        <div class="node-type-list-container skinny-scrollbar">
+          <div class="node-type-scroll-container">
+              <div class="node-type" id="node-type-{{type}} node-type-list-item" ng-class="{'active-type-node':(type === activeTypeFilter)}" ng-repeat="type in nodeTypes">
+                <md-button class="node-type-text" ng-click="filterNodes(type)" md-truncate>{{type}}</md-button>
+              </div>
+          </div>
+        </div>
+    </div>
+
+    <div class="nodegraph-search-container" layout="row" layout-align="center center" ng-if="searchList.length">
+      <div class="nodegraph-search">
+        <md-autocomplete
+            class="floating"
+            ng-disabled="!searchList.length"
+            md-selected-item="activenode"
+            md-search-text="searchText"
+            md-selected-item-change="flyToNode(node.id)"
+            md-items="node in querySearch(searchText)"
+            md-item-text="node.id"
+            md-min-length="0"
+            placeholder="Search Nodes...">
+          <md-item-template>
+            <span md-highlight-text="searchText" md-highlight-flags="^i">{{node.id}}</span>
+          </md-item-template>
+          <md-not-found>
+            No nodes matching "{{searchText}}" were found.
+          </md-not-found>
+        </md-autocomplete>
+      </div>
+    </div>
+
+    <force-graph data="nodeGraphData" activenode="activenode" typefilter="activeTypeFilter" darkmode="darkMode"></force-graph>
+    </md-content>
+</div>

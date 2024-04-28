@@ -1,0 +1,90 @@
+<div flex class="remote-content" layout="column" layout-align="start stretch">
+
+  <!-- <div flex="100" class="remote-missing-container" layout="column" ng-if="((!remote.local.length)&&(!remote.external.length))" layout-align="center center">
+    <div flex="100" class="remote-missing" layout="column" layout-align="center center">
+      <div class="spinner-container">
+        <div class="loading-spinner"></div>
+      </div>
+    </div>
+  </div> -->
+  <div class="remote-container" layout="column" layout-align="center stretch" ng-if="!playback.state">
+    <span class="remote-disconnected"><span class="machine-name" ng-bind="selectedMachine.name"></span>: Video Player Disconnected</span>
+  </div>
+
+  <div class="remote-container" layout="column" layout-align="center stretch" ng-if="playback.state">
+
+    <div class="remote-top-controls" layout="row" layout-align="start center">
+      <div flex="10" class="time-indicator time-elapsed" ng-bind="playback.time | runtime"></div>
+      <md-slider-container flex="80" ng-mouseup="startPolling()" ng-mousedown="stopPolling()">
+        <md-slider md-theme="dark" min="0" max="{{playback.length}}" ng-model="playback.time" aria-label="playback-position" id="playback-position" class="controller"></md-slider>
+      </md-slider-container>
+      <div flex="10" class="time-indicator time-remaining" ng-bind="(playback.length - playback.time) | runtime"></div>
+    </div>
+
+    <div class="playlist-info" layout="row" layout-align="center center">
+      <span class="playlist-uri" ng-bind="playlist.children[0].children[0].uri"></span>
+    </div>
+
+
+    <div flex="" class="remote-controls" layout="row" layout-align="start stretch">
+      <div flex="10" class="remote-controls left-controls" layout="row" layout-align="start center">
+        <!-- <md-button class="md-icon-button gang-subs-button responsive-dvd-button" md-ink-ripple="false" ng-class="{'gang-on':(gangSync === true)}" ng-click="toggleGangSync()" aria-label="gang-subs">
+          <md-tooltip>Gang Sync Subtitles</md-tooltip>
+          <md-icon class="remote-button-icon" md-svg-src="/js/@material-icons/svg/svg/subtitles/baseline.svg">
+        </md-button> -->
+        <md-button class="md-icon-button cycle-subs-button responsive-dvd-button" md-ink-ripple="false"  ng-click="dvdCommand('b')" aria-label="cycle-audio">
+          <md-tooltip>Cycle Audio</md-tooltip>
+          <md-icon class="remote-button-icon" md-svg-src="/js/@material-icons/svg/svg/volume_up/baseline.svg">
+        </md-button>
+      </div>
+      <div flex="10" class="remote-controls left-controls" layout="row" layout-align="start center">
+        <md-button class="md-icon-button cycle-subs-button responsive-dvd-button" md-ink-ripple="false"  ng-click="sendCommand('cyclesubs')" aria-label="cycle-subs">
+          <md-tooltip>Cycle Subtitles</md-tooltip>
+          <md-icon class="remote-button-icon" md-svg-src="/js/@material-icons/svg/svg/closed_caption/baseline.svg">
+        </md-button>
+      </div>
+
+      <div flex="60" class="remote-controls center-controls" layout="column" layout-align="center center">
+        <div class="button-row-container" layout="row" layout-align="center center">
+          <md-button class="md-icon-button step-back-button responsive-dvd-button" md-ink-ripple="false" aria-label="step-back" ng-click="sendCommand('seek&val=-1S')">
+            <md-icon class="remote-button-icon" md-svg-src="/js/@material-icons/svg/svg/skip_previous/baseline.svg">
+          </md-button>
+          <md-button class="md-icon-button play-pause-button responsive-dvd-button" ng-if="playback.state === 'paused'" md-ink-ripple="false" aria-label="play-pause" ng-click="sendCommand('pl_pause')">
+            <md-icon class="remote-button-icon" md-svg-src="/js/@material-icons/svg/svg/play_arrow/baseline.svg">
+          </md-button>
+
+          <md-button class="md-icon-button play-pause-button responsive-dvd-button" md-ink-ripple="false" ng-if="playback.state === 'playing'" aria-label="play-pause" ng-click="sendCommand('pl_pause')">
+            <md-icon class="remote-button-icon" md-svg-src="/js/@material-icons/svg/svg/pause/baseline.svg">
+          </md-button>
+
+          <md-button class="md-icon-button step-forward-button responsive-dvd-button" md-ink-ripple="false" aria-label="step-forward" ng-click="sendCommand('seek&val=+1S')">
+            <md-icon class="remote-button-icon" md-svg-src="/js/@material-icons/svg/svg/skip_next/baseline.svg">
+          </md-button>
+        </div>
+      </div>
+
+      <div flex="10" class="remote-controls right-controls" layout="row" layout-align="end center">
+        <md-button class="md-icon-button fullscreen-button responsive-dvd-button" md-ink-ripple="false" ng-click="sendCommand('fullscreen')" ng-if="playback.fullscreen === false" aria-label="fullscreen">
+          <md-tooltip>Fullscreen</md-tooltip>
+          <md-icon class="remote-button-icon" md-svg-src="/js/@material-icons/svg/svg/fullscreen/baseline.svg">
+        </md-button>
+
+        <md-button class="md-icon-button fullscreen-button responsive-dvd-button" md-ink-ripple="false" ng-click="sendCommand('fullscreen')" ng-if="playback.fullscreen === true" aria-label="fullscreen">
+          <md-tooltip>Exit Fullscreen</md-tooltip>
+          <md-icon class="remote-button-icon" md-svg-src="/js/@material-icons/svg/svg/fullscreen_exit/baseline.svg">
+        </md-button>
+      </div>
+
+      <div flex="10" class="remote-controls right-controls" layout="row" layout-align="end center">
+        <md-button class="md-icon-button framegrab-button responsive-dvd-button" md-ink-ripple="false" ng-click="sendCommand('snapshot')" aria-label="fullscreen">
+          <md-tooltip>Snapshot</md-tooltip>
+          <md-icon class="remote-button-icon" md-svg-src="/js/@material-icons/svg/svg/add_a_photo/baseline.svg">
+        </md-button>
+      </div>
+
+    </div>
+
+
+  </div>
+
+</div>

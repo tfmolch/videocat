@@ -1,0 +1,58 @@
+<md-dialog aria-label="edit entry" class="edit-entry-dialog" md-theme="{{getTheme()}}" ng-keydown="keyPress($event)">
+    <md-toolbar class="md-hue-2">
+      <div class="md-toolbar-tools">
+        <h3>Edit {{entry.title}}</h3>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="cancel()">
+          <md-icon aria-label="Close dialog">close</md-icon>
+        </md-button>
+      </div>
+    </md-toolbar>
+    <md-dialog-content layout="column" md-padding>
+      <div class="dialog-top" layout="row">
+
+        <div flex="50" class="data-entry-container" id="left-container">
+          <div class="catalog-data" layout="column" layout-align="center stretch">
+            <md-input-container>
+               <label>Title</label>
+               <input ng-model="entry._source.title">
+             </md-input-container>
+
+             <md-input-container>
+                <label>Year</label>
+                <input ng-model="entry._source.year" type="number">
+              </md-input-container>
+
+              <md-input-container>
+                 <label>Director</label>
+                 <input ng-model="entry._source.director">
+               </md-input-container>
+
+              <md-input-container>
+                 <label>Production Company</label>
+                 <input ng-model="entry._source.productioncompany">
+               </md-input-container>
+          </div>
+        </div>
+
+        <div flex="" class="data-entry-container" id="right-container">
+          <div class="comment-container" md-theme="{{getTheme()}}" layout="column" layout-align="center stretch">
+            <label class="textarea-comment" for="comments">Comments</label>
+            <textarea flex="" id="comments" name="comments" ng-model="entry._source.comment"></textarea>
+          </div>
+        </div>
+
+    </div>
+
+
+      <md-dialog-actions layout="row" class="dialog-buttons">
+        <span flex></span>
+        <md-button ng-click="answer('cancel')">
+         Cancel
+        </md-button>
+        <md-button ng-click="answer('update')">
+          Update
+        </md-button>
+      </md-dialog-actions>
+    </md-dialog-content>
+</md-dialog>

@@ -1,0 +1,384 @@
+<div flex class="discmetadata-content" layout="column" layout-align="start stretch">
+
+<div flex class="discmetadata-content" layout="column" layout-align="start stretch" ng-if="!discmetadata">
+  <div flex="100" class="discmetadata-missing-container" layout="column" layout-align="center center">
+    <div class="discmetadata-missing-container">
+      <div class="loading-spinner"></div>
+    </div>
+  </div>
+</div>
+
+<div flex class="discmetadata-content" layout="column" layout-align="start stretch" ng-if="discmetadata && (!discmetadata.storage_size)">
+  <div flex="100" class="discmetadata-missing-container" layout="column" layout-align="center center">
+      <md-icon class="data-missing-icon">block</md-icon>
+      <div class="panel-element disc-info-text" layout="column">
+        <div class="panel-element info-title"><span id="missing-info-title" class="missing-data">Disc Metadata Unavailable</span></div>
+        <div flex="" class="panel-element"><span class="missing-info">Disc coud not be read</span></div>
+      </div>
+    </div>
+  </div>
+
+<md-tabs class="panel-tabs" id="discmetadata-tabs" md-center-tabs md-align-tabs="bottom" md-no-ink	md-no-ink-bar ng-if="discmetadata.storage_size">
+  <md-tab label="tracks">
+    <md-content class="track-info" ng-if="mediatype === 'BD'">
+
+      <div class="panel-element metadata-set disc-metadata">
+        <div class="metadata-set-header">Disc</div>
+
+        <div class="panel-element metadata-set-content">
+          <div class="metadata-set-list video-tracks" layout="column" layout-align="start stretch">
+
+            <div flex="100" class="metadata-set-list-row" layout="row" layout-align="start center" ng-if="discmetadata.bluray['disc name'].length">
+              <div flex="20" class="metadata-row-element">
+                <span class="row-title video-track">Name:</span>
+              </div>
+              <div flex="" class="metadata-row-element" layout="row" layout-align="start center">
+                <span flex="" class="row-content">{{discmetadata.bluray['disc name']}}</span>
+              </div>
+            </div>
+
+
+            <div flex="100" class="metadata-set-list-row" layout="row" layout-align="start center">
+              <div flex="20" class="metadata-row-element">
+                <span class="row-title video-track">Type:</span>
+              </div>
+              <div flex="" class="metadata-row-element" layout="row" layout-align="start center">
+                <span flex="" class="row-content">{{mediatype}}</span>
+              </div>
+            </div>
+
+            <div flex="100" class="metadata-set-list-row" layout="row" layout-align="start center">
+              <div flex="20" class="metadata-row-element">
+                <span class="row-title video-track">Path:</span>
+              </div>
+              <div flex="" class="metadata-row-element" layout="row" layout-align="start center">
+                <span flex="" class="row-content">{{path}}</span>
+              </div>
+            </div>
+
+            <div flex="100" class="metadata-set-list-row" layout="row" layout-align="start center">
+              <div flex="20" class="metadata-row-element">
+                <span class="row-title video-track">Size:</span>
+              </div>
+              <div flex="" class="metadata-row-element" layout="row" layout-align="start center">
+                <span flex="" class="row-content">{{discmetadata.storage_size_human}} ({{discmetadata.storage_size}} Bytes)</span>
+              </div>
+            </div>
+
+
+            <div flex="100" class="metadata-set-list-row" layout="row" layout-align="start center" ng-if="discmetadata.bluray['provider data'].length">
+              <div flex="20" class="metadata-row-element">
+                <span class="row-title video-track">Provider:</span>
+              </div>
+              <div flex="" class="metadata-row-element" layout="row" layout-align="start center">
+                <span flex="" class="row-content">{{discmetadata.bluray['provider data']}}</span>
+              </div>
+            </div>
+
+
+            <div flex="100" class="metadata-set-list-row" layout="row" layout-align="start center">
+              <div flex="20" class="metadata-row-element">
+                <span class="row-title video-track">ID:</span>
+              </div>
+              <div flex="" class="metadata-row-element" layout="row" layout-align="start center">
+                <span flex="" class="row-content"><a target="_blank" ng-href="/api/doc/{{id}}">{{id}}</a></span>
+              </div>
+            </div>
+
+
+          </div>
+        </div>
+        <md-divider class="metadata-set-divider"></md-divider>
+      </div>
+
+      <div class="panel-element metadata-set video-metadata">
+        <div class="metadata-set-header">Video</div>
+
+        <div class="panel-element metadata-set-content">
+          <div class="metadata-set-list video-tracks" layout="column" layout-align="start stretch">
+
+            <div flex="100" class="metadata-set-list-row" layout="row" layout-align="start center">
+              <div flex="20" class="metadata-row-element">
+                <span class="row-title video-track">Runtime:</span>
+              </div>
+              <div flex="" class="metadata-row-element" layout="row" layout-align="start center">
+                <span flex="" class="row-content">{{discmetadata.titles[0]['length']}}</span>
+              </div>
+            </div>
+
+            <div flex="100" class="metadata-set-list-row" layout="row" layout-align="start center">
+              <div flex="20" class="metadata-row-element">
+                <span class="row-title video-track">Format:</span>
+              </div>
+              <div flex="" class="metadata-row-element" layout="row" layout-align="start center">
+                <span flex="" class="row-content">{{discmetadata.titles[0].video[0].format}}</span>
+              </div>
+            </div>
+
+            <div flex="100" class="metadata-set-list-row" layout="row" layout-align="start center">
+              <div flex="20" class="metadata-row-element">
+                <span class="row-title video-track">FPS:</span>
+              </div>
+              <div flex="" class="metadata-row-element" layout="row" layout-align="start center">
+                <span flex="" class="row-content">{{discmetadata.titles[0].video[0].framerate}}</span>
+              </div>
+            </div>
+
+            <div flex="100" class="metadata-set-list-row" layout="row" layout-align="start center">
+              <div flex="20" class="metadata-row-element">
+                <span class="row-title video-track">Codec:</span>
+              </div>
+              <div flex="" class="metadata-row-element" layout="row" layout-align="start center">
+                <span flex="" class="row-content">{{discmetadata.titles[0].video[0].codec}} {{discmetadata.titles[0].video[0]['codec name']}} <span ng-if="discmetadata.bluray['3D content'] === true">3D</span></span>
+              </div>
+            </div>
+
+            <div flex="100" class="metadata-set-list-row" layout="row" layout-align="start center">
+              <div flex="20" class="metadata-row-element">
+                <span class="row-title video-track">Aspect:</span>
+              </div>
+              <div flex="" class="metadata-row-element" layout="row" layout-align="start center">
+                <span flex="" class="row-content">{{discmetadata.titles[0].video[0]['aspect ratio']}}</span>
+              </div>
+            </div>
+
+            <div flex="100" class="metadata-set-list-row" layout="row" layout-align="start center">
+              <div flex="20" class="metadata-row-element">
+                <span class="row-title video-track">Chapters:</span>
+              </div>
+              <div flex="" class="metadata-row-element" layout="row" layout-align="start center">
+                <span flex="" class="row-content">{{discmetadata.titles[0].chapters.length}}</span>
+              </div>
+            </div>
+
+            <div flex="100" class="metadata-set-list-row" layout="row" layout-align="start center">
+              <div flex="20" class="metadata-row-element">
+                <span class="row-title video-track">Main Title:</span>
+              </div>
+              <div flex="" class="metadata-row-element" layout="row" layout-align="start center">
+                <span flex="" class="row-content">{{discmetadata.bluray['main title']}}</span>
+              </div>
+            </div>
+
+            <div flex="100" class="metadata-set-list-row" layout="row" layout-align="start center">
+              <div flex="20" class="metadata-row-element">
+                <span class="row-title video-track">Main Playlist:</span>
+              </div>
+              <div flex="" class="metadata-row-element" layout="row" layout-align="start center">
+                <span flex="" class="row-content">{{discmetadata.bluray['main playlist']}}</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <md-divider class="metadata-set-divider"></md-divider>
+      </div>
+
+      <div class="panel-element metadata-set audio-metadata">
+        <div class="metadata-set-header">Audio</div>
+
+        <div class="panel-element metadata-set-content">
+          <div class="metadata-set-list audio-tracks" layout="column" layout-align="space-around stretch">
+            <div flex="100" class="metadata-set-list-row" layout="row" layout-align="start center" ng-repeat="track in discmetadata.titles[0].audio">
+                  <span flex="10" class="row-title audio-track">{{track.track}}:</span>
+                  <span flex="15" class="row-content track-language">{{track.language_en}}</span>
+                  <md-icon class="row-content inline-icon">arrow_right</md-icon>
+                  <span flex="30" class="row-content" style="text-align:center;">{{track['codec name']}}</span>
+                  <md-icon class="row-content inline-icon">arrow_right</md-icon>
+                  <span flex="" class="row-content" style="text-transform:uppercase;">{{track.format}}</span>
+            </div>
+          </div>
+        </div>
+        <md-divider class="metadata-set-divider"></md-divider>
+      </div>
+
+      <div class="panel-element metadata-set subtitle-metadata" ng-if="discmetadata.titles[0].subtitles.length">
+        <div class="metadata-set-header">Subtitles</div>
+
+        <div class="panel-element metadata-set-content">
+          <div class="metadata-set-list subtitle-tracks" layout="column" layout-align="space-around stretch">
+            <div flex="100" class="metadata-set-list-row" layout="row" layout-align="start center" ng-repeat="track in discmetadata.titles[0].subtitles">
+                  <span flex="10" class="row-title subtitle-track">{{track.track}}:</span>
+                  <span flex="" class="row-content track-language subtitle-track-language">{{track.language_en}}</span>
+            </div>
+          </div>
+        </div>
+        <!-- <md-divider class="metadata-set-divider"></md-divider> -->
+      </div>
+
+    </md-content>
+
+    <md-content class="track-info" ng-if="mediatype === 'DVD'">
+
+      <div class="panel-element metadata-set disc-metadata">
+        <div class="metadata-set-header">Disc</div>
+
+        <div class="panel-element metadata-set-content">
+          <div class="metadata-set-list video-tracks" layout="column" layout-align="start stretch">
+
+            <div flex="100" class="metadata-set-list-row" layout="row" layout-align="start center">
+              <div flex="20" class="metadata-row-element">
+                <span class="row-title video-track">Type:</span>
+              </div>
+              <div flex="" class="metadata-row-element" layout="row" layout-align="start center">
+                <span flex="" class="row-content">{{mediatype}}</span>
+              </div>
+            </div>
+
+            <div flex="100" class="metadata-set-list-row" layout="row" layout-align="start center">
+              <div flex="20" class="metadata-row-element">
+                <span class="row-title video-track">Path:</span>
+              </div>
+              <div flex="" class="metadata-row-element" layout="row" layout-align="start center">
+                <span flex="" class="row-content">{{path}}</span>
+              </div>
+            </div>
+
+            <div flex="100" class="metadata-set-list-row" layout="row" layout-align="start center">
+              <div flex="20" class="metadata-row-element">
+                <span class="row-title video-track">Size:</span>
+              </div>
+              <div flex="" class="metadata-row-element" layout="row" layout-align="start center">
+                <span flex="" class="row-content">{{discmetadata.storage_size_human}} ({{discmetadata.storage_size}} Bytes)</span>
+              </div>
+            </div>
+
+            <div flex="100" class="metadata-set-list-row" layout="row" layout-align="start center" ng-if="discmetadata.provider_id[0].length">
+              <div flex="20" class="metadata-row-element">
+                <span class="row-title video-track">Provider:</span>
+              </div>
+              <div flex="" class="metadata-row-element" layout="row" layout-align="start center">
+                <span flex="" class="row-content">{{discmetadata.provider_id[0]}}</span>
+              </div>
+            </div>
+
+            <div flex="100" class="metadata-set-list-row" layout="row" layout-align="start center">
+              <div flex="20" class="metadata-row-element">
+                <span class="row-title video-track">ID:</span>
+              </div>
+              <div flex="" class="metadata-row-element" layout="row" layout-align="start center">
+                <span flex="" class="row-content"><a target="_blank" ng-href="/api/doc/{{id}}">{{id}}</a></span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <md-divider class="metadata-set-divider"></md-divider>
+      </div>
+
+      <div class="panel-element metadata-set video-metadata">
+        <div class="metadata-set-header">Video</div>
+
+        <div class="panel-element metadata-set-content">
+          <div class="metadata-set-list video-tracks" layout="column" layout-align="start stretch">
+
+            <div flex="100" class="metadata-set-list-row" layout="row" layout-align="start center">
+              <div flex="20" class="metadata-row-element">
+                <span class="row-title video-track">Runtime:</span>
+              </div>
+              <div flex="" class="metadata-row-element" layout="row" layout-align="start center">
+                <span flex="" class="row-content">{{discmetadata.main_title_track.length[0] | runtime}}</span>
+              </div>
+            </div>
+
+            <div flex="100" class="metadata-set-list-row" layout="row" layout-align="start center">
+              <div flex="20" class="metadata-row-element">
+                <span class="row-title video-track">Format:</span>
+              </div>
+              <div flex="" class="metadata-row-element" layout="row" layout-align="start center">
+                <span flex="" class="row-content">{{discmetadata.main_title_track.format[0]}}</span>
+              </div>
+            </div>
+
+            <div flex="100" class="metadata-set-list-row" layout="row" layout-align="start center">
+              <div flex="20" class="metadata-row-element">
+                <span class="row-title video-track">FPS:</span>
+              </div>
+              <div flex="" class="metadata-row-element" layout="row" layout-align="start center">
+                <span flex="" class="row-content">{{discmetadata.main_title_track.fps[0]}}</span>
+              </div>
+            </div>
+
+            <div flex="100" class="metadata-set-list-row" layout="row" layout-align="start center">
+              <div flex="20" class="metadata-row-element">
+                <span class="row-title video-track">Size:</span>
+              </div>
+              <div flex="" class="metadata-row-element" layout="row" layout-align="start center">
+                <span flex="" class="row-content">{{discmetadata.main_title_track.width[0]}}x{{discmetadata.main_title_track.height[0]}} px</span>
+              </div>
+            </div>
+
+            <div flex="100" class="metadata-set-list-row" layout="row" layout-align="start center">
+              <div flex="20" class="metadata-row-element">
+                <span class="row-title video-track">Aspect:</span>
+              </div>
+              <div flex="" class="metadata-row-element" layout="row" layout-align="start center">
+                <span flex="" class="row-content">{{discmetadata.main_title_track.aspect[0]}}<span ng-if="discmetadata.main_title_track.df[0] !== '?'">, {{discmetadata.main_title_track.df[0]}}</span></span>
+              </div>
+            </div>
+
+            <div flex="100" class="metadata-set-list-row" layout="row" layout-align="start center">
+              <div flex="20" class="metadata-row-element">
+                <span class="row-title video-track">Chapters:</span>
+              </div>
+              <div flex="" class="metadata-row-element" layout="row" layout-align="start center">
+                <span flex="" class="row-content">{{discmetadata.main_title_track.chapter.length}}</span>
+              </div>
+            </div>
+
+            <div flex="100" class="metadata-set-list-row" layout="row" layout-align="start center">
+              <div flex="20" class="metadata-row-element">
+                <span class="row-title video-track">Main Title:</span>
+              </div>
+              <div flex="" class="metadata-row-element" layout="row" layout-align="start center">
+                <span flex="" class="row-content">{{discmetadata.main_title_track.ix[0]}}</span>
+              </div>
+            </div>
+
+
+          </div>
+        </div>
+        <md-divider class="metadata-set-divider"></md-divider>
+      </div>
+
+      <div class="panel-element metadata-set audio-metadata">
+        <div class="metadata-set-header">Audio</div>
+
+        <div class="panel-element metadata-set-content">
+          <div class="metadata-set-list audio-tracks" layout="column" layout-align="space-around stretch">
+            <div flex="100" class="metadata-set-list-row" layout="row" layout-align="start center" ng-repeat="track in discmetadata.main_title_track.audio">
+                  <span flex="10" class="row-title audio-track">{{track.ix[0]}}:</span>
+                  <span flex="15" class="row-content track-language">{{track.language[0]}}</span>
+                  <md-icon class="row-content inline-icon">arrow_right</md-icon>
+                  <span flex="30" class="row-content">{{track.channels[0]}} Channel <span style="text-transform:uppercase;">{{track.format[0]}}</span></span>
+                  <span flex="" ng-if="track.content[0] !== 'Undefined'">
+                    <md-icon class="row-content inline-icon">arrow_right</md-icon>
+                    <span class="row-content">{{track.content[0]}}</span>
+                  </span>
+            </div>
+          </div>
+        </div>
+        <md-divider class="metadata-set-divider"></md-divider>
+      </div>
+
+      <div class="panel-element metadata-set subtitle-metadata" ng-if="discmetadata.main_title_track.subp.length">
+        <div class="metadata-set-header">Subtitles</div>
+
+        <div class="panel-element metadata-set-content">
+          <div class="metadata-set-list subtitle-tracks" layout="column" layout-align="space-around stretch">
+            <div flex="100" class="metadata-set-list-row" layout="row" layout-align="start center" ng-repeat="track in discmetadata.main_title_track.subp">
+                  <span flex="10" class="row-title subtitle-track">{{track.ix[0]}}:</span>
+                  <span flex="" class="row-content track-language subtitle-track-language">{{track.language[0]}}</span>
+            </div>
+          </div>
+        </div>
+        <!-- <md-divider class="metadata-set-divider"></md-divider> -->
+      </div>
+
+    </md-content>
+  </md-tab>
+  <md-tab label="raw">
+    <pre>{{discmetadata | json}}</pre>
+  </md-tab>
+</md-tabs>
+</div>

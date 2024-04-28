@@ -1,0 +1,137 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Catalogue</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+    <link rel="shortcut icon" href="/favicon.ico" sizes="16x16">
+    <link rel="apple-touch-icon" sizes="160x160" href="<%= image_path 'favicon.png' %>">
+
+    <link rel="stylesheet" href="js//animate.css/animate.min.css">
+    <link rel="stylesheet" href="js/angular-material/angular-material.css"></link>
+    <link rel="stylesheet" href="js/material-icons/iconfont/material-icons.css">
+    <link rel="stylesheet" href="js/jspanel4/dist/jspanel.css">
+    <link rel="stylesheet" href="fonts/fonts.css"></link>
+    <link rel="stylesheet" href="style.css"></link>
+
+
+    <script src="js/jquery/dist/jquery.js"></script>
+    <script src="js/angular/angular.js"></script>
+    <script src="js/angular-animate/angular-animate.js"></script>
+
+    <script src="/js/three/build/three.js"></script>
+    <script src="/js/three-spritetext/dist/three-spritetext.js"></script>
+    <script src="/js/three/examples/js/renderers/CSS2DRenderer.js"></script>
+    <script src="/js/3d-force-graph/dist/3d-force-graph.js"></script>
+
+    <script src="/js/echarts/dist/echarts.js"></script>
+    <script src="catalogue-theme.js"></script>
+    <script src="/js/ng-echarts/dist/ng-echarts.js"></script>
+    <script src="js/moment/moment.js"></script>
+    <script src="js/jspanel4/dist/jspanel.js"></script>
+    <script src="js/angular-moment/angular-moment.js"></script>
+    <script src="js/angular-aria/angular-aria.js"></script>
+    <script src="js/angular-messages/angular-messages.js"></script>
+    <script src="js/angular-route/angular-route.js"></script>
+    <script src="js/angular-sanitize/angular-sanitize.js"></script>
+    <script src="js/angular-material/angular-material.js"></script>
+    <script src="js/ngstorage/ngStorage.js"></script>
+    <script src="js/ng-fittext/dist/ng-FitText.min.js"></script>
+    <script src="js/angular-websocket/dist/angular-websocket.js"></script>
+    <script src="list/list.controller.js"></script>
+    <script src="nodegraph/nodegraph.controller.js"></script>
+
+    <script src="app.js"></script>
+</head>
+
+<body ng-app="catalogue" class="ng-cloak">
+
+  <div id="initial-loading-container" class="loading-container fade-out" layout="column" ng-if="loading.isLoading === true" layout-align="center center" ng-class="{'dark-mode':darkMode,'loading-bg':(loading.loadingBg===true)}">
+    <div class="loading-inner-container" layout="column" layout-align="space-around center">
+
+      <div class="loading-progress" ng-if="!loading.progress.progress_percent" layout="column" layout-align="center stretch">
+        <div class="loading-text">
+          <span class="loading-string">{{loading.statusText}}</span>
+        </div>
+        <div class="loading-progress-bar-container">
+          <md-progress-linear md-mode="indeterminate" class="loading-progress-bar" ng-class="{'dark-mode':darkMode}"></md-progress-linear>
+        </div>
+      </div>
+
+      <div class="loading-progress" ng-if="loading.progress.progress_percent" layout="column" layout-align="center stretch">
+        <div class="loading-text">
+          <span class="loading-string">{{loading.statusText}}</span>
+          <span class="loading-size">({{loading.progress.loaded}}kb / {{loading.progress.total}}kb)<span>
+        </div>
+        <div class="loading-progress-bar-container">
+          <md-progress-linear md-mode="determinate" class="loading-progress-bar" value="{{loading.progress.progress_percent}}" ng-class="{'dark-mode':darkMode}"></md-progress-linear>
+          <div class="loading-percentage">{{loading.progress.progress_percent}}%</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="router-outlet" ng-class="{'dark-mode':darkMode}" ng-view ng-cloak></div>
+
+    <div  ng-controller="viewController as ctrl">
+    <bbfc position="right-bottom -40 -40" size="225 180" panelstate="panelstate(id,visible)" visible="$storage.panelVisibility.bbfc"></bbfc>
+    <mpaa position="right-bottom -300 -40" size="225 180" panelstate="panelstate(id,visible)" visible="$storage.panelVisibility.mpaa"></mpaa>
+    <framegrabs position="right-center -40 80" size="760 420" panelstate="panelstate(id,visible)" visible="$storage.panelVisibility.framegrabs"></framegrabs>
+    <shots position="left-top 40 40" size="685 370" panelstate="panelstate(id,visible)" visible="$storage.panelVisibility.shots"></shots>
+    <remote position="left-bottom 40 -40" size="800 190" panelstate="panelstate(id,visible)" visible="$storage.panelVisibility.remote"></remote>
+    <dvdctrl position="left-bottom 850 -40" size="190 190" panelstate="panelstate(id,visible)" visible="$storage.panelVisibility.dvdctrl"></dvdctrl>
+    <activity position="right-bottom -660 -40" size="350 210" panelstate="panelstate(id,visible)" visible="$storage.panelVisibility.activity"></activity>
+<!--     <subtitles theme="getTheme()" position="left-center 40 80" size="960 500" panelstate="panelstate(id,visible)" visible="$storage.panelVisibility.subtitles"></subtitles>
+ -->    
+    <discmetadata position="right-top -40 40" size="400 535" panelstate="panelstate(id,visible)" visible="$storage.panelVisibility.discmetadata"></discmetadata>
+    <moviemetadata position="right-bottom -40 -275" size="485 420" panelstate="panelstate(id,visible)" visible="$storage.panelVisibility.moviemetadata"></moviemetadata>
+
+    <context-menu visible="contextMenu"></context-menu>
+
+    <div class="feet" layout="row" layout-align="end center" ng-mouseover="hoverStorageStats = true" ng-mouseleave="hoverStorageStats = false">
+      <div class="stats footer" layout="row" layout-align="end center">
+        <div class="footer-element" ng-if="$storage.selection.selectedRangeEnd">
+          <span class="selection-value" id="multiselect">{{$storage.selection.selectedRangeEnd | rangeincludes:$storage.selection.selectedItem}}</span> Selected
+        </div>
+        <div class="footer-element">
+          <span class="stat-value" id="total">{{stats.unplayed}}</span> Unplayed
+        </div>
+        <div class="footer-element" ng-if="stats">
+          <span class="stat-value" id="total">{{aggs.titles}}</span> Titles
+        </div>
+        <div class="footer-element">
+          <span class="stat-value" id="total">{{aggs.discs}}</span> Discs
+        </div>
+        <div class="footer-element" ng-repeat="media in aggs.aggregations">
+          <span class="stat-value" id="{{media.key}}-count">{{media.doc_count}}</span> {{media.key}}s
+        </div>
+      </div>
+      <div class="storage footer" layout="row" layout-align="end center">
+        <div class="storage-totals" ng-if="stats">
+          <div class="storage-indicator-container" layout="column" layout-align="center stretch">
+            <span class="storage-indicator-text">{{stats.total_used_human}} / {{stats.total_human}}</span>
+            <div class="storage-indicator-bar" style="width:{{stats.percentage_used}}%"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tooltip storage-stats" ng-show="hoverStorageStats">
+      <div class="storage-tooltip-content" layout="column" layout-align="center stretch">
+        <div class="storage-stats-container" ng-repeat="mount in stats.disks" layout="row" layout-align="center stretch">
+          <div flex="" class="disk-name" md-truncate>{{mount.name}}:</div>
+          <div flex="80" class="storage-indicator-container" layout="column" layout-align="center stretch">
+            <span class="storage-indicator-text">{{mount.free_human}} Free</span>
+            <div class="storage-indicator-bar" style="width:{{mount.percentage_used}}%"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</body>
+
+</html>

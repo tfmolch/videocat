@@ -1,0 +1,22 @@
+<div class="rating-panel-content" layout="column" layout-align="center stretch">
+
+  <div flex="" class="classification-image-container">
+    <div class="panel-element classification-icon" ng-style="{'background-image':('url(/img/bbfc/{{rating.classification}}.svg')}" ng-if="rating"></div>
+    <div class="panel-element classification-icon data-missing-icon" ng-if="!rating"></div>
+  </div>
+
+  <div class="panel-element rating-text" layout="column" layout-align="center stretch">
+
+    <div class="panel-element rating-title">
+      <div class="panel-element rating-title" ng-if="rating">{{rating.title}}</div>
+      <div id="missing-classification-title" class="missing-data" ng-if="!rating">Classification Unavailable</div>
+    </div>
+
+    <div class="panel-element rating-shortforminsight">
+      <div data-fittext class="insight" ng-if="rating.shortFormInsight">{{rating.shortFormInsight}}</div>
+      <div data-fittext class="missing-insight missing-data" ng-if="!rating.shortFormInsight">Short-Form Insight Unavailable</div>
+    </div>
+
+  </div>
+
+</div>

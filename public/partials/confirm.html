@@ -1,0 +1,13 @@
+<md-dialog aria-label="Resume" md-theme="{{theme}}">
+  <md-dialog-content class="md-dialog-content">
+    <h2 class="md-title ng-binding">{{title}}</h2>
+    <div class="md-dialog-content-body">
+      <p class="prompt-resume">Resume from <span class="resume-timecode">{{time}}</span>?</p>
+    </div>
+  </md-dialog-content>
+  <md-dialog-actions>
+    <md-button class="md-primary" md-theme="{{theme}}" ng-click="answer('cancel')">Cancel</md-button>
+    <md-button class="md-primary" md-theme="{{theme}}" ng-click="answer('no')">No</md-button>
+    <md-button class="md-primary" md-theme="{{theme}}" ng-click="answer('yes')">Yes</md-button>
+  </md-dialog-actions>
+</md-dialog>

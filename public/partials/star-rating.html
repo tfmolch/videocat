@@ -1,0 +1,28 @@
+<div class="star-rating">
+
+  <div class="star-icon-container" ng-click="setRating(1)">
+    <md-icon class="star-icon" ng-if="rating === 0">star_border</md-icon>
+    <md-icon class="star-icon" ng-if="rating > 0">star</md-icon>
+  </div>
+
+  <div class="star-icon-container" ng-click="setRating(2)">
+    <md-icon class="star-icon" ng-if="rating < 2">star_border</md-icon>
+    <md-icon class="star-icon" ng-if="rating > 1">star</md-icon>
+  </div>
+
+  <div class="star-icon-container" ng-click="setRating(3)">
+    <md-icon class="star-icon" ng-if="rating < 3">star_border</md-icon>
+    <md-icon class="star-icon" ng-if="rating > 2">star</md-icon>
+  </div>
+
+  <div class="star-icon-container" ng-click="setRating(4)">
+    <md-icon class="star-icon" ng-if="rating < 4">star_border</md-icon>
+    <md-icon class="star-icon" ng-if="rating > 3">star</md-icon>
+  </div>
+
+  <div class="star-icon-container" ng-click="setRating(5)">
+    <md-icon class="star-icon" ng-if="rating < 5">star_border</md-icon>
+    <md-icon class="star-icon" ng-if="rating === 5">star</md-icon>
+  </div>
+
+</div>

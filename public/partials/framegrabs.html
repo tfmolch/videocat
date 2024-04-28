@@ -1,0 +1,25 @@
+<div flex class="framegrabs-content" layout="column" layout-align="start stretch">
+
+  <div flex="100" class="framegrabs-missing-container" ng-if="!framegrabs.urls.length" layout="column" layout-align="center center">
+    <div class="framegrabs-missing-container">
+      <span class="material-icons panel-element framegrabs-missing">no_photography</span>
+    </div>
+    <div class="panel-element rating-title"><span id="missing-framegrabs-title" class="missing-data">No stills for this title</span></div>
+  </div>
+
+  <div ng-if="framegrabs.urls.length" class="framegrabs-tabs-container" layout="column" layout-align="start stretch">
+    <md-tabs flex="100" class="md-primary framegrabs-tabs" md-center-tabs md-no-ink	md-no-ink-bar md-align-tabs="bottom" md-selected="framegrabs.tabIndex">
+      <md-tab label="{{$index + 1}}" ng-repeat="framegrab in framegrabs.urls">
+        <div class="framegrab-image" style='background-image:url("{{framegrab}}")'></div>
+      </md-tab>
+    </md-tabs>
+    <div class="framegrab-nav" layout="row" layout-align="space-between stretch">
+      <div ng-click="framegrabNav('previous')" class="previous frammegrab-button" ng-mouseover="(previousVisible = true)" ng-mouseleave="(previousVisible = false)" layout="column" layout-align="center center">
+        <md-icon flex ng-class="{'visible-overlay-icon':(previousVisible === true)}" class="next-icon">keyboard_arrow_left</md-icon>
+      </div>
+      <div ng-click="framegrabNav('next')" class="next frammegrab-button" ng-mouseover="(nextVisible = true)" ng-mouseleave="(nextVisible = false)" layout="column" layout-align="center center">
+        <md-icon flex ng-class="{'visible-overlay-icon':(nextVisible === true)}" class="next-icon">keyboard_arrow_right</md-icon>
+      </div>
+    </div>
+  </div>
+</div>
